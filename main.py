@@ -14,7 +14,7 @@ vec =pygame.math.Vector2
 
 #background
 bg = pygame.transform.scale(pygame.image.load("bg.png"), size)
-clouds = pygame.image.load("clouds.gif")
+clouds = pygame.transform.scale(pygame.image.load("clouds.gif"), (100,100))
 i=-720*2
 
 #player
@@ -38,7 +38,7 @@ class Player(pygame.sprite.Sprite):
             self.acc.x = -ACC
         if pressed_keys[K_RIGHT]:
             self.acc.x = ACC
-        if pressed_keys[K_UP] and self.pos.y == (464 or 462 or 463):
+        if pressed_keys[K_UP] and self.pos.y == 440:
             self.vel.y = -10
              
         self.acc.x += self.vel.x * FRIC
@@ -49,8 +49,8 @@ class Player(pygame.sprite.Sprite):
             self.pos.x = 0
         if self.pos.x < 0:
             self.pos.x = width
-        if self.pos.y > 466:
-            self.pos.y =464
+        if self.pos.y > 440:
+            self.pos.y =440
 
 player = Player() 
 
@@ -88,7 +88,7 @@ while True:
         
     pygame.display.update()
 
-    timer.tick(144)
+    timer.tick(60)
 
 #ending pygame
 pygame.quit()
