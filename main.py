@@ -10,6 +10,7 @@ pygame.init()
 size = width, height = 1280, 720
 screen = pygame.display.set_mode(size)
 timer = pygame.time.Clock()
+vec =pygame.math.Vector2
 
 #background
 bg = pygame.transform.scale(pygame.image.load("bg.png"), size)
@@ -17,7 +18,6 @@ clouds = pygame.image.load("clouds.gif")
 i=-720*2
 
 #player
-vec =pygame.math.Vector2
 ACC = 0.5
 FRIC = -0.12
 class Player(pygame.sprite.Sprite):
@@ -53,6 +53,16 @@ class Player(pygame.sprite.Sprite):
             self.pos.y =464
 
 player = Player() 
+
+# platforms
+class platform(pygame.sprite.Sprite):
+    def __init__(self):
+        super().__init__()
+        self.surf =  pygame.image.load("")
+        self.rect = self.surf.get_rect()
+
+
+
 
 #update loop 
 while True:
