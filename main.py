@@ -1,4 +1,6 @@
 #import libraries
+from codecs import xmlcharrefreplace_errors
+from telnetlib import XDISPLOC
 import pygame
 from pygame.locals import *
 import sys
@@ -14,8 +16,23 @@ vec =pygame.math.Vector2
 
 #background
 bg = pygame.transform.scale(pygame.image.load("bg.png"), size)
-clouds = pygame.transform.scale(pygame.image.load("clouds.gif"), (100,100))
+clouds = pygame.transform.scale(pygame.image.load("clouds.gif"), (200,200))
 i=-720*2
+
+# platforms
+class platform(pygame.sprite.Sprite):
+    def __init__(self, xloc,yloc):
+        pygame.sprite.Sprite.__init__(self)
+        self.surf =  pygame.image.load("platform.png")
+        self.rect = self.surf.get_rect()
+        self.rect.x = xloc 
+        self.rect.y = yloc
+    
+    
+
+p1 = platform(600, 400)
+platforms = pygame.sprite.Group()
+platforms.add(p1)
 
 #player
 ACC = 0.5
@@ -29,6 +46,12 @@ class Player(pygame.sprite.Sprite):
         self.pos = vec((640, 400))
         self.vel = vec(0,0)
         self.acc = vec(0,0)
+
+    def update(self):
+            hits = pygame.sprite.spritecollide(player , platforms, False)
+            if hits:
+                self.pos.y = hits[0].rect.top + 1
+                self.vel.y = 0
  
     def move(self):
         self.acc = vec(0,0.5)
@@ -38,7 +61,7 @@ class Player(pygame.sprite.Sprite):
             self.acc.x = -ACC
         if pressed_keys[K_RIGHT]:
             self.acc.x = ACC
-        if pressed_keys[K_UP] and self.pos.y == 440:
+        if pressed_keys[K_UP] and self.pos.y == 435:
             self.vel.y = -10
              
         self.acc.x += self.vel.x * FRIC
@@ -49,18 +72,12 @@ class Player(pygame.sprite.Sprite):
             self.pos.x = 0
         if self.pos.x < 0:
             self.pos.x = width
-        if self.pos.y > 440:
-            self.pos.y =440
+        if self.pos.y > 435:
+            self.pos.y =435
+
+        
 
 player = Player() 
-
-# platforms
-class platform(pygame.sprite.Sprite):
-    def __init__(self):
-        super().__init__()
-        self.surf =  pygame.image.load("")
-        self.rect = self.surf.get_rect()
-
 
 
 
@@ -79,6 +96,8 @@ while True:
     screen.blit(player.surf, player.pos)
     player.move()
 
+    #platform displaytest 
+    screen.blit(p1.surf, p1.rect)
     #event loop
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
