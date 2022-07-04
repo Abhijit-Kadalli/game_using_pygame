@@ -50,7 +50,7 @@ class Player(pygame.sprite.Sprite):
     def update(self):
             hits = pygame.sprite.spritecollide(player , platforms, False)
             if hits:
-                self.pos.y = hits[0].rect.top + 1
+                self.pos.y = hits[0].rect.y + 1
                 self.vel.y = 0
  
     def move(self):
