@@ -14,3 +14,5 @@
 4. creating player class 
 5. displaying and moving the player object using up, left and right
  
+## Flaps
+Working flappy bird game that I will use to make a reinforced learning deep learning nn
